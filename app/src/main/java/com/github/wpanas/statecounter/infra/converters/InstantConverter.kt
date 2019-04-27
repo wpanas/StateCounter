@@ -6,15 +6,11 @@ import java.time.Instant
 object InstantConverter {
     @TypeConverter
     @JvmStatic
-    fun fromTimestamp(timestamp: Long?): Instant? {
-        return timestamp?.let {
-            return Instant.ofEpochMilli(it)
-        }
+    fun fromTimestamp(timestamp: Long?): Instant? = timestamp?.let {
+        return Instant.ofEpochMilli(it)
     }
 
     @TypeConverter
     @JvmStatic
-    fun toTimestamp(instant: Instant?): Long? {
-        return instant?.toEpochMilli()
-    }
+    fun toTimestamp(instant: Instant?): Long? = instant?.toEpochMilli()
 }
