@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">State Counter</string>
+    <string name="increment_state">Plus</string>
+    <string name="decrement_state">Minus</string>
+    <string name="default_state" translatable="false">0</string>
+    <string name="counter">Counter</string>
+    <string name="save_state">Save</string>
+</resources>

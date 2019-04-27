@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">State Counter</string>
+    <string name="increment_state">Dodaj</string>
+    <string name="decrement_state">Usuń</string>
+    <string name="counter">Licznik</string>
+    <string name="save_state">Zapisz</string>
+</resources>
