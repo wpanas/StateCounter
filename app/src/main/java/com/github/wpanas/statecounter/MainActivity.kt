@@ -12,9 +12,10 @@ import com.github.wpanas.statecounter.action.ActionItemAdapter
 import com.github.wpanas.statecounter.action.ActionModule
 import com.github.wpanas.statecounter.action.ActionViewModel
 import com.github.wpanas.statecounter.counter.CounterViewModel
+import com.github.wpanas.statecounter.infra.ItemClickListener
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ItemClickListener {
     @Inject lateinit var counterModel: CounterViewModel
     @Inject lateinit var actionModel: ActionViewModel
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.action_recycler)
-        val actionItemAdapter = ActionItemAdapter()
+        val actionItemAdapter = ActionItemAdapter(this)
         recyclerView.apply {
             adapter = actionItemAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -51,15 +52,26 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun incrementState(view: View) {
         counterModel.increment()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun decrementState(view: View) {
         counterModel.decrement()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun saveState(view: View) {
         actionModel.save(Action.of(counterModel.getData().value ?: 0))
+    }
+
+    override fun onItemClicked(view: View, position: Int) {
+        val action = actionModel.allActions.value?.get(position)
+
+        if (action != null) {
+            actionModel.delete(action)
+        }
     }
 }

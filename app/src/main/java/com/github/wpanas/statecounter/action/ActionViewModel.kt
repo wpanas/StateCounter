@@ -33,4 +33,8 @@ class ActionViewModel(application: Application): AndroidViewModel(application) {
         super.onCleared()
         parentJob.cancel()
     }
+
+    fun delete(action: Action) = scope.launch(Dispatchers.IO) {
+        repository.delete(action)
+    }
 }
