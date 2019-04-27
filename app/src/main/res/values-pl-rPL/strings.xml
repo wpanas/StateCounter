@@ -5,4 +5,5 @@
     <string name="decrement_state">Usuń</string>
     <string name="counter">Licznik</string>
     <string name="save_state">Zapisz</string>
+    <string name="delete_state_confirmation">Czy chcesz usunąć %d?</string>
 </resources>

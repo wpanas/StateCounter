@@ -5,4 +5,5 @@
     <string name="default_state" translatable="false">0</string>
     <string name="counter">Counter</string>
     <string name="save_state">Save</string>
+    <string name="delete_state_confirmation">Do you want to delete %d?</string>
 </resources>

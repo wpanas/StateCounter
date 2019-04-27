@@ -3,6 +3,7 @@ package com.github.wpanas.statecounter
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -71,7 +72,17 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         val action = actionModel.allActions.value?.get(position)
 
         if (action != null) {
-            actionModel.delete(action)
+            AlertDialog.Builder(this).let {
+                it.setTitle(getString(R.string.delete_state_confirmation, action.value))
+
+                it.setPositiveButton(android.R.string.yes) { dialog, which ->
+                    actionModel.delete(action)
+                }
+
+                it.setNegativeButton(android.R.string.no, null)
+
+                it.show()
+            }
         }
     }
 }
