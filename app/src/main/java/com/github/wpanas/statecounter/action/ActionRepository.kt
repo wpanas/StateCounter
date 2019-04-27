@@ -7,12 +7,12 @@ class ActionRepository(private val actionDao: ActionDao) {
     val allActions: LiveData<List<Action>> = actionDao.getAllActions()
 
     @WorkerThread
-    suspend fun insert(action: Action) {
+    fun insert(action: Action) {
         actionDao.insert(action)
     }
 
     @WorkerThread
-    suspend fun delete(action: Action) {
+    fun delete(action: Action) {
         actionDao.delete(action)
     }
 }
