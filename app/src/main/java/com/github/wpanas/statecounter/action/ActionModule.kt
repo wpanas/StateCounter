@@ -1,17 +1,17 @@
 package com.github.wpanas.statecounter.action
 
+import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import com.github.wpanas.statecounter.MainActivity
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class ActionModule(private val mainActivity: MainActivity) {
+class ActionModule(private val application: Application) {
 
     @Provides
     @Singleton
     fun viewModel(): ActionViewModel {
-        return ViewModelProvider.AndroidViewModelFactory.getInstance(mainActivity.application).create(ActionViewModel::class.java)
+        return ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(ActionViewModel::class.java)
     }
 }
