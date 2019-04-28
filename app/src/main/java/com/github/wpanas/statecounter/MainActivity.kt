@@ -72,16 +72,13 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         val action = actionModel.allActions.value?.get(position)
 
         if (action != null) {
-            AlertDialog.Builder(this).let {
-                it.setTitle(getString(R.string.delete_state_confirmation, action.value))
-
-                it.setPositiveButton(android.R.string.yes) { dialog, which ->
+            AlertDialog.Builder(this).apply {
+                setTitle(getString(R.string.delete_state_confirmation, action.value))
+                setPositiveButton(android.R.string.yes) { dialog, which ->
                     actionModel.delete(action)
                 }
-
-                it.setNegativeButton(android.R.string.no, null)
-
-                it.show()
+                setNegativeButton(android.R.string.no, null)
+                show()
             }
         }
     }
