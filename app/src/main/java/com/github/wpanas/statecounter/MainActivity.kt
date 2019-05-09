@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.wpanas.statecounter.action.Action
@@ -24,10 +25,14 @@ class MainActivity : DaggerAppCompatActivity(), ItemClickListener, CounterChange
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     @Inject
-    lateinit var actionViewModel: ActionViewModel
+    lateinit var actionViewModelFactory: ActionViewModel.Factory
 
     @Inject
     lateinit var counterViewModel: CounterViewModel
+
+    private val actionViewModel: ActionViewModel by lazy {
+        return@lazy ViewModelProviders.of(this, actionViewModelFactory).get(ActionViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

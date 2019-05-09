@@ -1,7 +1,6 @@
 package com.github.wpanas.statecounter.action
 
 import android.app.Application
-import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,7 +10,14 @@ class ActionModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun viewModel(): ActionViewModel {
-        return ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(ActionViewModel::class.java)
+    fun viewModelFactory(actionRepository: ActionRepository): ActionViewModel.Factory {
+        return ActionViewModel.Factory(actionRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun repository(): ActionRepository {
+        val actionDao = ActionRoomDatabase.getDatabase(application).actionDao()
+        return ActionRepository(actionDao)
     }
 }
