@@ -19,5 +19,5 @@ class CounterViewModel: ViewModel() {
         liveData.value = liveData.value?.minus(1)
     }
 
-    val data: LiveData<Int> = liveData
+    val counter: LiveData<Int> = liveData
 }

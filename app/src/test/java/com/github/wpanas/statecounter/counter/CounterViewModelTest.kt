@@ -12,26 +12,34 @@ class CounterViewModelTest {
 
     @Test
     fun `should have default zero state`() {
+        // given
         val viewModel = CounterViewModel()
 
-        assertEquals(0, viewModel.data.value)
+        // then
+        assertEquals(0, viewModel.counter.value)
     }
 
     @Test
-    fun `should increment state`() {
+    fun `should increment counter state`() {
+        // given
         val viewModel = CounterViewModel()
 
+        // when
         viewModel.increment()
 
-        assertEquals(1, viewModel.data.value)
+        // then
+        assertEquals(1, viewModel.counter.value)
     }
 
     @Test
-    fun `should decrement state`() {
+    fun `should decrement counter state`() {
+        // given
         val viewModel = CounterViewModel()
 
+        // when
         viewModel.decrement()
 
-        assertEquals(-1, viewModel.data.value)
+        // then
+        assertEquals(-1, viewModel.counter.value)
     }
 }
