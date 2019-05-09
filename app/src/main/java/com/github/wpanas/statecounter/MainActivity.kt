@@ -74,7 +74,7 @@ class MainActivity : DaggerAppCompatActivity(), ItemClickListener, CounterChange
     }
 
     override fun saveState(view: View) {
-        actionViewModel.save(Action.of(counterViewModel.getData().value ?: 0))
+        actionViewModel.save(Action.of(counterViewModel.data.value ?: 0))
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector

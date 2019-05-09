@@ -33,7 +33,7 @@ class CounterFragment : DaggerFragment() {
         val view = inflater.inflate(R.layout.fragment_counter, container, false)
         val counter = view?.findViewById<TextView>(R.id.counter)
 
-        counterViewModel.getData().observe(this, Observer {
+        counterViewModel.data.observe(this, Observer {
             counter?.text = it.toString()
         })
 
