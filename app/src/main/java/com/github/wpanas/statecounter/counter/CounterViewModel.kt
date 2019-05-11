@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CounterViewModel: ViewModel() {
-    private val liveData: MutableLiveData<Int> by lazy {
+open class CounterViewModel : ViewModel() {
+    protected val liveData: MutableLiveData<Int> by lazy {
         val mutableLiveData = MutableLiveData<Int>()
         mutableLiveData.value = 0
         return@lazy mutableLiveData
     }
 
-    fun increment() {
+    open fun increment() {
         liveData.value = liveData.value?.plus(1)
     }
 
-    fun decrement() {
+    open fun decrement() {
         liveData.value = liveData.value?.minus(1)
     }
 
