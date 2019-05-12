@@ -180,6 +180,7 @@ class TimerViewModelTest {
             countDownTimerBuilder.onTick(any())
             countDownTimerBuilder.onFinish(any())
             countDownTimerBuilder.build()
+            countDownTimer.start()
         }
 
         confirmVerified(countDownTimerBuilder)
@@ -204,6 +205,7 @@ class TimerViewModelTest {
             countDownTimerBuilder.onTick(any())
             countDownTimerBuilder.onFinish(any())
             countDownTimerBuilder.build()
+            countDownTimer.start()
         }
 
         confirmVerified(countDownTimerBuilder)
@@ -234,6 +236,7 @@ class TimerViewModelTest {
             countDownTimerBuilder.onTick(any())
             countDownTimerBuilder.onFinish(any())
             countDownTimerBuilder.build()
+            countDownTimer.start()
         }
 
         confirmVerified(countDownTimerBuilder)

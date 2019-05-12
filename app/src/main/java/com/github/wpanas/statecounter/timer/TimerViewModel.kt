@@ -46,9 +46,9 @@ class TimerViewModel(private val countDownTimerBuilder: CountDownTimerBuilder) :
                 onFinish { countDownTimer.set(null) }
             }.build()
 
-            countDownTimer.compareAndSet(null, timer)
-
-            timer.start()
+            if (countDownTimer.compareAndSet(null, timer)) {
+                timer.start()
+            }
         }
     }
 }
