@@ -15,11 +15,17 @@ class TimerViewModelTest {
     @JvmField
     val rule = InstantTaskExecutorRule()
 
-    lateinit var countDownTimerBuilder: CountDownTimerBuilder
+    private lateinit var countDownTimerBuilder: CountDownTimerBuilder
+    private lateinit var countDownTimer: CountDownTimer
 
     @Before
     fun setup() {
         countDownTimerBuilder = mockk(relaxed = true)
+        countDownTimer = mockk(relaxed = true)
+
+        every {
+            countDownTimerBuilder.build()
+        } returns countDownTimer
     }
 
     @Test
@@ -64,11 +70,6 @@ class TimerViewModelTest {
     fun `should start counting from state`() {
         // given
         val viewModel = TimerViewModel(countDownTimerBuilder)
-        val countDownTimer = mockk<CountDownTimer>(relaxed = true)
-
-        every {
-            countDownTimerBuilder.build()
-        } returns countDownTimer
 
         viewModel.increment()
         viewModel.increment()
@@ -82,6 +83,7 @@ class TimerViewModelTest {
             countDownTimerBuilder.timeInFuture(2)
             countDownTimerBuilder.countDownInterval(1)
             countDownTimerBuilder.onTick(any())
+            countDownTimerBuilder.onFinish(any())
             countDownTimerBuilder.build()
 
             countDownTimer.start()
@@ -94,12 +96,7 @@ class TimerViewModelTest {
     fun `should pause counting after counting started`() {
         // given
         val viewModel = TimerViewModel(countDownTimerBuilder)
-        val countDownTimer = mockk<CountDownTimer>(relaxed = true)
         val decrement = slot<(millisUntilFinished: Long) -> Unit>()
-
-        every {
-            countDownTimerBuilder.build()
-        } returns countDownTimer
 
         every {
             countDownTimerBuilder.onTick(capture(decrement))
@@ -134,12 +131,7 @@ class TimerViewModelTest {
     fun `should reset counting after started`() {
         // given
         val viewModel = TimerViewModel(countDownTimerBuilder)
-        val countDownTimer = mockk<CountDownTimer>(relaxed = true)
         val decrement = slot<(millisUntilFinished: Long) -> Unit>()
-
-        every {
-            countDownTimerBuilder.build()
-        } returns countDownTimer
 
         every {
             countDownTimerBuilder.onTick(capture(decrement))
@@ -168,5 +160,82 @@ class TimerViewModelTest {
         }
 
         confirmVerified(countDownTimer)
+    }
+
+    @Test
+    fun `should not start countdown before other is finished`() {
+        // given
+        val viewModel = TimerViewModel(countDownTimerBuilder)
+
+        viewModel.start()
+
+        // when
+        viewModel.start()
+
+        // then
+        verify(exactly = 1) {
+            countDownTimerBuilder.unit(TimeUnit.SECONDS)
+            countDownTimerBuilder.timeInFuture(0)
+            countDownTimerBuilder.countDownInterval(1)
+            countDownTimerBuilder.onTick(any())
+            countDownTimerBuilder.onFinish(any())
+            countDownTimerBuilder.build()
+        }
+
+        confirmVerified(countDownTimerBuilder)
+    }
+
+    @Test
+    fun `should start countdown after other is stopped`() {
+        // given
+        val viewModel = TimerViewModel(countDownTimerBuilder)
+
+        viewModel.start()
+        viewModel.stop()
+
+        // when
+        viewModel.start()
+
+        // then
+        verify(exactly = 2) {
+            countDownTimerBuilder.unit(TimeUnit.SECONDS)
+            countDownTimerBuilder.timeInFuture(0)
+            countDownTimerBuilder.countDownInterval(1)
+            countDownTimerBuilder.onTick(any())
+            countDownTimerBuilder.onFinish(any())
+            countDownTimerBuilder.build()
+        }
+
+        confirmVerified(countDownTimerBuilder)
+    }
+
+    @Test
+    fun `should start countdown after other is finished`() {
+        // given
+        val viewModel = TimerViewModel(countDownTimerBuilder)
+        val finished = slot<() -> Unit>()
+
+        every { countDownTimerBuilder.onFinish(capture(finished)) } returns countDownTimerBuilder
+
+        viewModel.start()
+
+        every { countDownTimer.onFinish() } returns finished.captured()
+
+        countDownTimer.onFinish()
+
+        // when
+        viewModel.start()
+
+        // then
+        verify(exactly = 2) {
+            countDownTimerBuilder.unit(TimeUnit.SECONDS)
+            countDownTimerBuilder.timeInFuture(0)
+            countDownTimerBuilder.countDownInterval(1)
+            countDownTimerBuilder.onTick(any())
+            countDownTimerBuilder.onFinish(any())
+            countDownTimerBuilder.build()
+        }
+
+        confirmVerified(countDownTimerBuilder)
     }
 }

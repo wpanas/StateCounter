@@ -26,6 +26,7 @@ class TimerViewModel(private val countDownTimerBuilder: CountDownTimerBuilder) :
     fun stop() {
         pause()
         liveData.value = internalCounter.get()
+        countDownTimer.set(null)
     }
 
     fun pause() {
@@ -35,15 +36,17 @@ class TimerViewModel(private val countDownTimerBuilder: CountDownTimerBuilder) :
     }
 
     fun start() {
-        if (countDownTimer.get() == null) {
+        val oldTimer = countDownTimer.get()
+        if (oldTimer == null) {
             val timer = countDownTimerBuilder.apply {
                 unit(TimeUnit.SECONDS)
                 countDownInterval(1)
                 timeInFuture(internalCounter.toLong())
                 onTick { super.decrement() }
+                onFinish { countDownTimer.set(null) }
             }.build()
 
-            countDownTimer.set(timer)
+            countDownTimer.compareAndSet(null, timer)
 
             timer.start()
         }
