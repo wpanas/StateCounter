@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.github.wpanas.statecounter">
+          xmlns:tools="http://schemas.android.com/tools" package="com.github.wpanas.statecounter">
 
     <application
             android:name=".StateCounterApplication"
-            android:allowBackup="true"
+            android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name=".timer.TimerActivity">
+            android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".counter.CounterActivity"
+                  android:parentActivityName=".MainActivity">
+        </activity>
+        <activity android:name=".timer.TimerActivity"
+                  android:parentActivityName=".MainActivity">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -5,16 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.wpanas.statecounter.R
-import com.github.wpanas.statecounter.infra.ItemClickListener
 import kotlinx.android.synthetic.main.action_item.view.*
 
-class ActionItemAdapter(private val itemClickListener: ItemClickListener) : RecyclerView.Adapter<ActionItemAdapter.ActionHolder>() {
+class ActionItemAdapter(private val actionClickListener: ActionClickListener) :
+    RecyclerView.Adapter<ActionItemAdapter.ActionHolder>() {
     private var actions: List<Action> = emptyList()
 
     override fun onBindViewHolder(holder: ActionHolder, position: Int) {
         holder.itemView.action_item_text.text = actions[position].value.toString()
         holder.itemView.action_item_card.setOnClickListener {
-            itemClickListener.onItemClicked(it, position)
+            actionClickListener.onItemClicked(it, position)
         }
     }
 
