@@ -15,6 +15,6 @@ abstract class ActivitiesBuilder {
     @ContributesAndroidInjector(modules = [CounterFragmentProvider::class])
     abstract fun bindCounterActivity(): CounterActivity
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [CounterFragmentProvider::class])
     abstract fun bindTimerActivity(): TimerActivity
 }

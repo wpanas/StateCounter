@@ -6,6 +6,4 @@ interface CounterChanger {
     fun incrementState(view: View)
 
     fun decrementState(view: View)
-
-    fun saveState(view: View)
 }

@@ -7,6 +7,8 @@
     <string name="save_state">Save</string>
     <string name="delete_state_confirmation">Do you want to delete %d?</string>
     <string name="timer">Timer</string>
+    <string name="start" translatable="false">Start</string>
+    <string name="stop" translatable="false">Stop</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

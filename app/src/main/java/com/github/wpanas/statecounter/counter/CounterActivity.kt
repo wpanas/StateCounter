@@ -69,7 +69,8 @@ class CounterActivity : DaggerAppCompatActivity(), ActionClickListener, CounterC
         counterViewModel.decrement()
     }
 
-    override fun saveState(view: View) {
+    @Suppress("UNUSED_PARAMETER")
+    fun saveState(view: View) {
         actionViewModel.save(Action.of(counterViewModel.counter.value ?: 0))
     }
 }

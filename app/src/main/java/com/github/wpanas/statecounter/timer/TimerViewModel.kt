@@ -1,31 +1,40 @@
 package com.github.wpanas.statecounter.timer
 
 import android.os.CountDownTimer
+import com.github.wpanas.statecounter.counter.Counter
 import com.github.wpanas.statecounter.counter.CounterViewModel
 import com.github.wpanas.statecounter.infra.utils.CountDownTimerBuilder
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
-class TimerViewModel(private val countDownTimerBuilder: CountDownTimerBuilder) : CounterViewModel() {
+class TimerViewModel(
+    private val countDownTimerBuilder: CountDownTimerBuilder,
+    private val counterViewModel: CounterViewModel
+) : Counter {
     private val internalCounter = AtomicInteger()
     private val countDownTimer = AtomicReference<CountDownTimer>()
 
+    var counter: Int = 0
+        private set
+        get() = internalCounter.get()
+
     override fun increment() {
-        super.increment()
-        internalCounter.incrementAndGet()
+        counterViewModel.increment()
+        internalCounter.set(counterViewModel.counter.value ?: 0)
     }
 
     override fun decrement() {
-        if (counter.value!! > 0) {
-            super.decrement()
-            internalCounter.decrementAndGet()
+        if (counterViewModel.counter.value!! > 0) {
+            counterViewModel.decrement()
+            internalCounter.set(counterViewModel.counter.value ?: 0)
         }
     }
 
-    fun stop() {
+    override fun reset(state: Int) {
         pause()
-        liveData.value = internalCounter.get()
+        counterViewModel.reset()
+        internalCounter.set(state)
         countDownTimer.set(null)
     }
 
@@ -42,7 +51,7 @@ class TimerViewModel(private val countDownTimerBuilder: CountDownTimerBuilder) :
                 unit(TimeUnit.SECONDS)
                 countDownInterval(1)
                 timeInFuture(internalCounter.toLong())
-                onTick { super.decrement() }
+                onTick { counterViewModel.decrement() }
                 onFinish { countDownTimer.set(null) }
             }.build()
 

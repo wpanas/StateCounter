@@ -48,6 +48,5 @@ class CounterFragment : DaggerFragment() {
 
         view.findViewById<Button>(R.id.minus_button).setOnClickListener(counterChanger::decrementState)
         view.findViewById<Button>(R.id.plus_button).setOnClickListener(counterChanger::incrementState)
-        view.findViewById<Button>(R.id.save_button).setOnClickListener(counterChanger::saveState)
     }
 }
