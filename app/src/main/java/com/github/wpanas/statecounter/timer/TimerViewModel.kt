@@ -44,7 +44,7 @@ class TimerViewModel(
         }
     }
 
-    fun start() {
+    fun start(onFinish: () -> Unit) {
         val oldTimer = countDownTimer.get()
         if (oldTimer == null) {
             val timer = countDownTimerBuilder.apply {
@@ -52,7 +52,10 @@ class TimerViewModel(
                 countDownInterval(1)
                 timeInFuture(internalCounter.toLong())
                 onTick { counterViewModel.decrement() }
-                onFinish { countDownTimer.set(null) }
+                onFinish {
+                    countDownTimer.set(null)
+                    onFinish()
+                }
             }.build()
 
             if (countDownTimer.compareAndSet(null, timer)) {

@@ -2,6 +2,7 @@ package com.github.wpanas.statecounter.timer
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.github.wpanas.statecounter.R
 import com.github.wpanas.statecounter.counter.CounterChanger
 import dagger.android.support.DaggerAppCompatActivity
@@ -20,7 +21,9 @@ class TimerActivity : DaggerAppCompatActivity(), CounterChanger {
 
     @Suppress("UNUSED_PARAMETER")
     fun start(view: View) {
-        timerViewModel.start()
+        timerViewModel.start {
+            Toast.makeText(this, "Finished after ${timerViewModel.counter}s", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun incrementState(view: View) {
