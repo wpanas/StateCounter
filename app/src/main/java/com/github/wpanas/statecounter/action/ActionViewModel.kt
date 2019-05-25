@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 
 class ActionViewModel(private val repository: ActionRepository) : ViewModel() {
     val allActions: LiveData<List<Action>> = repository.allActions
+    val countingActions: LiveData<List<Action>> = repository.countingActions
+    val timingActions: LiveData<List<Action>> = repository.timingActions
 
     fun save(action: Action) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(action)

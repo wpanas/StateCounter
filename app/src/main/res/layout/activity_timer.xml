@@ -5,13 +5,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent" android:layout_height="match_parent"
         tools:context=".timer.TimerActivity">
-
+    <fragment android:layout_width="match_parent" android:layout_height="0dp"
+              android:name="com.github.wpanas.statecounter.action.ActionListFragment"
+              android:id="@+id/action_list" app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/cardView"/>
     <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/action_list" android:id="@+id/cardView">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -29,7 +32,8 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                     android:id="@+id/button" android:layout_marginTop="32dp"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment2" android:onClick="start"/>
+                    app:layout_constraintTop_toBottomOf="@+id/fragment2" android:onClick="start"
+                    android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

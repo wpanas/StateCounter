@@ -5,6 +5,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class CounterFragmentProvider {
-    @ContributesAndroidInjector(modules = [CounterFragmentModule::class])
+    @ContributesAndroidInjector
     abstract fun counterFragment(): CounterFragment
 }

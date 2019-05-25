@@ -8,9 +8,9 @@ import androidx.room.TypeConverters
 import com.github.wpanas.statecounter.infra.converters.InstantConverter
 import com.github.wpanas.statecounter.infra.converters.UuidConverter
 
-@Database(entities = [Action::class], version = 1)
-@TypeConverters(value = [UuidConverter::class, InstantConverter::class])
-abstract class ActionRoomDatabase: RoomDatabase() {
+@Database(entities = [Action::class], version = 2)
+@TypeConverters(value = [UuidConverter::class, InstantConverter::class, ActionTypeConverter::class])
+abstract class ActionRoomDatabase : RoomDatabase() {
     abstract fun actionDao(): ActionDao
 
     companion object {
@@ -28,7 +28,8 @@ abstract class ActionRoomDatabase: RoomDatabase() {
                     context.applicationContext,
                     ActionRoomDatabase::class.java,
                     "Action_database"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
 
                 INSTANCE = instance
 
