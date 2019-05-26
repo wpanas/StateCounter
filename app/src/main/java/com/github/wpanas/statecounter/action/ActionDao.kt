@@ -12,6 +12,9 @@ interface ActionDao {
     @Query("SELECT * FROM actions ORDER BY createdAt DESC")
     fun getAllActions(): LiveData<List<Action>>
 
+    @Query("SELECT * FROM actions WHERE type = :type ORDER BY createdAt DESC")
+    fun getActionsByType(type: Action.ActionType): LiveData<List<Action>>
+
     @Insert
     fun insert(action: Action)
 

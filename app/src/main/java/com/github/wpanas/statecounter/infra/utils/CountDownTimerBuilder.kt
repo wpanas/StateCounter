@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit
 class CountDownTimerBuilder {
     private var countDownInterval: Long = 0
     private var millisInFuture: Long = 0
-    private var onTickHandler: (millisUntilFinished: Long) -> Unit = fun(_: Long) {}
-    private var onFinishHandler: () -> Unit = fun() {}
+    private var onTickHandler: ((millisUntilFinished: Long) -> Unit)? = null
+    private var onFinishHandler: (() -> Unit)? = null
     private var unit: TimeUnit = TimeUnit.MILLISECONDS
 
     fun timeInFuture(timeInFuture: Long): CountDownTimerBuilder {
@@ -37,8 +37,12 @@ class CountDownTimerBuilder {
 
     fun build(): CountDownTimer =
         object : CountDownTimer(unit.toMillis(millisInFuture), unit.toMillis(countDownInterval)) {
-            override fun onFinish() = onFinishHandler()
+            override fun onFinish() {
+                onFinishHandler?.let { it() }
+            }
 
-            override fun onTick(millisUntilFinished: Long) = onTickHandler(millisUntilFinished)
+            override fun onTick(millisUntilFinished: Long) {
+                onTickHandler?.let { it(millisUntilFinished) }
+            }
         }
 }

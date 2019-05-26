@@ -6,19 +6,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".counter.CounterActivity">
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/action_item" android:clipToPadding="false" android:id="@+id/action_recycler"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/counter_card"/>
+    <fragment android:layout_width="match_parent" android:layout_height="0dp"
+              android:name="com.github.wpanas.statecounter.action.ActionListFragment"
+              android:id="@+id/action_list" app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/counter_card"/>
     <androidx.cardview.widget.CardView
             android:id="@+id/counter_card"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/action_recycler">
+            app:layout_constraintBottom_toTopOf="@id/action_list">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

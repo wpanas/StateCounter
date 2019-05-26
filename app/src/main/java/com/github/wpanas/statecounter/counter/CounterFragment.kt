@@ -19,11 +19,15 @@ class CounterFragment : DaggerFragment() {
     @Inject
     lateinit var counterViewModel: CounterViewModel
 
+    private var listener: CounterFragmentInteractionListener? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context !is CounterChanger) {
-            throw RuntimeException("Activity doesn't implement CounterChanger")
+        if (context is CounterFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement CounterFragmentInteractionListener")
         }
     }
 
@@ -43,10 +47,22 @@ class CounterFragment : DaggerFragment() {
         return view
     }
 
-    private fun initCounterChangerListeners(view: View) {
-        val counterChanger: CounterChanger = context as CounterChanger
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
 
-        view.findViewById<Button>(R.id.minus_button).setOnClickListener(counterChanger::decrementState)
-        view.findViewById<Button>(R.id.plus_button).setOnClickListener(counterChanger::incrementState)
+    private fun initCounterChangerListeners(view: View) {
+        view.findViewById<Button>(R.id.minus_button).setOnClickListener {
+            listener?.decrementState(it)
+        }
+        view.findViewById<Button>(R.id.plus_button).setOnClickListener {
+            listener?.incrementState(it)
+        }
+    }
+
+    interface CounterFragmentInteractionListener {
+        fun incrementState(view: View)
+        fun decrementState(view: View)
     }
 }

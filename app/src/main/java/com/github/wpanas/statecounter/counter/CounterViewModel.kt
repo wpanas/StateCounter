@@ -25,9 +25,3 @@ open class CounterViewModel : ViewModel(), Counter {
 
     val counter: LiveData<Int> = liveData
 }
-
-interface Counter {
-    fun increment()
-    fun decrement()
-    fun reset(state: Int = 0)
-}

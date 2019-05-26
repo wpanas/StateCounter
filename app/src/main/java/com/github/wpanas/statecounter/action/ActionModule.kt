@@ -20,4 +20,10 @@ class ActionModule(private val application: Application) {
         val actionDao = ActionRoomDatabase.getDatabase(application).actionDao()
         return ActionRepository(actionDao)
     }
+
+    @Provides
+    @Singleton
+    fun actionDialog(actionViewModelFactory: ActionViewModel.Factory): ActionDialog {
+        return ActionDialog(actionViewModelFactory)
+    }
 }
