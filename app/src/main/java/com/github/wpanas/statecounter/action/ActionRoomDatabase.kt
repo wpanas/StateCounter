@@ -17,6 +17,8 @@ abstract class ActionRoomDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: ActionRoomDatabase? = null
 
+        const val DATABASE_NAME = "Action_database"
+
         fun getDatabase(context: Context): ActionRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -27,8 +29,9 @@ abstract class ActionRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ActionRoomDatabase::class.java,
-                    "Action_database"
-                ).fallbackToDestructiveMigration()
+                    DATABASE_NAME
+                )
+                    .fallbackToDestructiveMigration()
                     .build()
 
                 INSTANCE = instance
